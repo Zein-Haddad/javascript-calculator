@@ -54,10 +54,7 @@ BUTTON_SPECIAL.forEach ((btn) => {
         break;
 
       case 'decimal':
-        if (num[index].indexOf('.' === -1)) {
-          num[index] += '.';
-          displayResult(num[index]);
-        }
+        addDecimal(index);
         break;
 
       case 'all-clear':
@@ -66,22 +63,11 @@ BUTTON_SPECIAL.forEach ((btn) => {
         break;
 
       case 'invert':
-        let newNum = -(parseFloat(num[index]));
-        num[index] = newNum.toString();
-        displayResult(num[index]);
+        invert(index);
         break;
 
       case 'clear-entry':
-        if (num[index].length > 1) {
-          num[index] = num[index].slice(0, -1);
-          displayResult(num[index]);
-        } else if (num[index] !== 0) {
-          num[index] = '';
-          displayResult('0');
-        } else {
-          operator = null;
-          displayResult(num[0]);
-        }
+        clearEntry(index);
         break;
     }
   })
@@ -94,9 +80,37 @@ function calc () {
     return;
   }
 
-  let result = round(operate(operator, num), DECIMAL_POINT);
+  let result = round(operate(operator, num), DECIMAL_POINT).toString();
   resetCalculator(result);
   displayResult(result);
+}
+
+function addDecimal (index) {
+  if (num[index].indexOf('.') === -1) {
+    num[index] += '.';
+    displayResult(num[index]);
+  }
+}
+
+function invert (index) {
+  if (num[index] === '') return;
+  
+  let newNum = -(parseFloat(num[index]));
+  num[index] = newNum.toString();
+  displayResult(num[index]);
+}
+
+function clearEntry (index) {
+  if (num[index].length > 1) {
+    num[index] = num[index].slice(0, -1);
+    displayResult(num[index]);
+  } else if (parseInt(num[index]) !== 0) {
+    num[index] = '';
+    displayResult('0');
+  } else {
+    operator = null;
+    displayResult(num[0]);
+  }
 }
 
 function resetCalculator (num0 = '') {
