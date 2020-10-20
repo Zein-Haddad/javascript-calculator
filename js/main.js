@@ -8,70 +8,83 @@ let operator = null;
 let num = ['', ''];
 
 BUTTON_NUM.forEach ((btn) => {
-  btn.addEventListener('click', (e) => {
-    let index = (operator === null) ? 0 : 1;
-    num[index] += btn.getAttribute('data');
-    displayResult(num[index]);
-  })
+  btn.addEventListener('click', numberEventHandler);
+  btn.addEventListener('touchstart', numberEventHandler);
 })
 
 BUTTON_OP.forEach ((btn) => {
-  btn.addEventListener('click', () => {
-    displayResult('0');
-    if (num[0] === '') num[0] = '0';
-    if (operator !== null) calc();
-
-    switch(btn.getAttribute('data')) {
-      case 'add':
-        operator = add;
-        break;
-
-      case 'subtract':
-        operator = subtract;
-        break;
-
-      case 'multiply':
-        operator = multiply;
-        break;
-
-      case 'divide':
-        operator = divide;
-        break;
-
-      default:
-        operator = null;
-    }
-  })
+  btn.addEventListener('click', operatorEventHandler);
+  btn.addEventListener('touchstart', operatorEventHandler);
 })
 
 BUTTON_SPECIAL.forEach ((btn) => {
-  btn.addEventListener('click', () => {
-    let index = (operator === null) ? 0 : 1;
-
-    switch(btn.getAttribute('data')) {
-      case 'operate':
-        calc();
-        break;
-
-      case 'decimal':
-        addDecimal(index);
-        break;
-
-      case 'all-clear':
-        resetCalculator();
-        displayResult('0');
-        break;
-
-      case 'invert':
-        invert(index);
-        break;
-
-      case 'clear-entry':
-        clearEntry(index);
-        break;
-    }
-  })
+  btn.addEventListener('click', specialEventHandler);
+  btn.addEventListener('touchstart', specialEventHandler);
 })
+
+
+
+function numberEventHandler (e, data = this.getAttribute('data')) {
+  let index = (operator === null) ? 0 : 1;
+  num[index] += data;
+  displayResult(num[index]);
+}
+
+function operatorEventHandler (e, data = this.getAttribute('data')) {
+  displayResult('0');
+  if (num[0] === '') num[0] = '0';
+  if (operator !== null) calc();
+
+  switch(data) {
+    case 'add':
+      operator = add;
+      break;
+
+    case 'subtract':
+      operator = subtract;
+      break;
+
+    case 'multiply':
+      operator = multiply;
+      break;
+
+    case 'divide':
+      operator = divide;
+      break;
+
+    default:
+      operator = null;
+  }
+}
+
+function specialEventHandler (e, data = this.getAttribute('data')) {
+  let index = (operator === null) ? 0 : 1;
+
+  switch(data) {
+    case 'operate':
+      calc();
+      break;
+
+    case 'decimal':
+      addDecimal(index);
+      break;
+
+    case 'all-clear':
+      resetCalculator();
+      displayResult('0');
+      break;
+
+    case 'invert':
+      invert(index);
+      break;
+
+    case 'clear-entry':
+      clearEntry(index);
+      break;
+  }
+}
+
+
 
 function calc () {
   if (operator === null || num[1] === '') return;
@@ -114,6 +127,8 @@ function clearEntry (index) {
 }
 
 function resetCalculator (num0 = '') {
+  if (num0 === '0') num0 = '';
+
   operator = null;
   num[1] = '';
   num[0] = num0;
