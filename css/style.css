@@ -50,11 +50,25 @@ body {
   background-color: #D4D4D2;
   color: #1C1C1C;
   flex-grow: 1;
+  cursor: pointer;
 
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   border: 1px solid #1C1C1C;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
+
+.btn:hover {
+  box-shadow: 0 0 0.5px 0.5px black;
+}
+
+.btn:active {
+  box-shadow: 0 0 1px 1px black;
 }
 
 .btn-option {
@@ -69,19 +83,21 @@ body {
 
 .btn-grow {
   flex-grow: 2048;
+  justify-content: flex-start;
+  padding-left: 1.4em;
 }
 
 @media only screen and (min-width: 600px) {
   .container {
-    width: 50%;
-    height: 60%;
+    width: 70%;
+    height: 80%;
   }
 }
 
 @media only screen and (min-width: 768px) {
   .container {
-    width: 40%;
-    height: 50%;
+    width: 70%;
+    height: 80%;
   }
 }
 
@@ -93,6 +109,10 @@ body {
 
   .display p {
     font-size: 1.5em;
+  }
+
+  .btn-grow {
+    padding-left: 1em;
   }
 }
 
