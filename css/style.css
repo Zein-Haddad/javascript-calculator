@@ -82,9 +82,9 @@ body {
 }
 
 .btn-grow {
-  flex-grow: 2048;
   justify-content: flex-start;
   padding-left: 1.4em;
+  min-width: 50%;
 }
 
 @media only screen and (min-width: 600px) {

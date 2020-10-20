@@ -34,6 +34,10 @@ function modulus (a, b) {
   return a % b;
 }
 
-function operate (operator, a, b) {
-  return operator(a, b);
+function round (num, significantDigit) {
+  return Math.round(num * 10**significantDigit) / 10**significantDigit;
+}
+
+function operate (operator, num) {
+  return operator(parseFloat(num[0]), parseFloat(num[1]));
 }
